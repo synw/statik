@@ -7,6 +7,11 @@ run commands
 
 Get a [binary release](releases) or clone and compile with Go
 
+```
+wget https://github.com/synw/statik/releases/download/0.1.0/statik
+chmod a+x statik
+```
+
 ## Watchers
 
 Create a `statik.config.json` file and set the watchers
