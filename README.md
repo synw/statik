@@ -5,7 +5,7 @@ run commands
 
 ## Install
 
-Get a [binary release](releases) or clone and compile with Go
+Get a [binary release](releases) for Linux or clone and compile with Go
 
 ```
 wget https://github.com/synw/statik/releases/download/0.1.0/statik
