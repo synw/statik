@@ -24,6 +24,9 @@ var HTTPS bool = false
 // Root : the root directory to serve
 var Root string = "."
 
+// SpaPath : single page app mode
+var SpaPath string = ""
+
 var _dir, _ = os.Getwd()
 
 // WorkingDir : the working directory
@@ -38,6 +41,7 @@ func Init() error {
 	viper.SetDefault("port", Port)
 	viper.SetDefault("https", HTTPS)
 	viper.SetDefault("root", Root)
+	viper.SetDefault("spa_path", "")
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			// Config file not found
@@ -48,6 +52,7 @@ func Init() error {
 	Port = viper.GetInt("port")
 	HTTPS = viper.GetBool("https")
 	Root = viper.GetString("root")
+	SpaPath = viper.GetString("spa_path")
 	// watchers
 	wb := viper.Get("watch").(map[string]interface{})
 	for w := range wb {

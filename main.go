@@ -21,6 +21,7 @@ var port = flag.Int("port", 8085, "Define the port to run on")
 var nr = flag.Bool("nr", false, "Disable the autoreload")
 var nw = flag.Bool("nw", false, "Disable the watchers")
 var nc = flag.Bool("nc", false, "Do not use the config file")
+var spa = flag.String("spa", "", "Path to run with single page app history mode")
 var genConf = flag.Bool("conf", false, "generate a config file")
 var genSSLcerts = flag.Bool("certs", false, "Help with generating self-signed ssl certificates to be able to run the server in https mode")
 
@@ -42,6 +43,8 @@ func main() {
 			conf.Root = *root
 		} else if f.Name == "port" {
 			conf.Port = *port
+		} else if f.Name == "spa" {
+			conf.SpaPath = *spa
 		}
 	})
 
@@ -74,6 +77,15 @@ func runServer() {
 	e.Use(middleware.Recover())
 
 	e.Static("/", conf.Root)
+	if conf.SpaPath != "" {
+		if *v {
+			fmt.Println("Running in spa history mode for path", conf.SpaPath)
+		}
+		baseSpaPath := "/" + conf.SpaPath
+		e.Static(baseSpaPath+"/*", conf.Root+"/index.html")
+		e.Static(baseSpaPath+"/", conf.Root+"/index.html")
+		e.Static(baseSpaPath, conf.Root+"/index.html")
+	}
 
 	if conf.HTTPS {
 		if *v {
@@ -98,5 +110,5 @@ func runServer() {
 
 func _genSSLCerts() {
 	fmt.Println("Generate local certificates with a command like:")
-	fmt.Println("openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365")
+	fmt.Println("openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout key.pem -out cert.pem")
 }
