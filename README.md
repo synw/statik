@@ -82,6 +82,8 @@ Optional flags are available, they take precedence over config params if set:
 
 **-nc**: do not use the config file
 
+**-ns**: do not run the web server
+
 **-https**: run the server in https mode
 
 **-port**: the port to run the server on

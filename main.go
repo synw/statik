@@ -21,6 +21,7 @@ var port = flag.Int("port", 8085, "Define the port to run on")
 var nr = flag.Bool("nr", false, "Disable the autoreload")
 var nw = flag.Bool("nw", false, "Disable the watchers")
 var nc = flag.Bool("nc", false, "Do not use the config file")
+var ns = flag.Bool("ns", false, "Do not run the web server")
 var spa = flag.String("spa", "", "Path to run with single page app history mode")
 var genConf = flag.Bool("conf", false, "generate a config file")
 var genSSLcerts = flag.Bool("certs", false, "Help with generating self-signed ssl certificates to be able to run the server in https mode")
@@ -66,7 +67,11 @@ func main() {
 		}
 	}
 
-	runServer()
+	if *ns == false {
+		runServer()
+	}
+	for {
+	}
 }
 
 func runServer() {
